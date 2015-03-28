@@ -18,7 +18,6 @@ public class DbExecutor extends SQLiteOpenHelper {
     }
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQLScripts.SQL_CREATE_MESSAGE_TABLE);
-        myDB = db;
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -32,6 +31,8 @@ public class DbExecutor extends SQLiteOpenHelper {
     }
 
     public void insertMockData(){
+
         myDB.execSQL(SQLScripts.SQL_INSERT_MESSAGE_TABLE);
     }
+
 }

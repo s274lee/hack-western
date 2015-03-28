@@ -1,5 +1,8 @@
 package hackwestern.hackwestern;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -13,6 +16,7 @@ import android.telephony.SmsManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.database.SQLException;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -25,11 +29,79 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        buttonClick();
+        double lat = getLatitude();
 
-        getLocation();
+        Toast.makeText(getApplicationContext(), String.valueOf(lat),
+                   Toast.LENGTH_LONG).show();
+//        buttonClick();
+//
+//        getLocation();
+
+//        try {
+//            DbExecutor exec = new DbExecutor(getApplicationContext());
+//
+//            // Gets the data repository in write mode
+//            SQLiteDatabase db = exec.getWritableDatabase();
+//
+//// Create a new map of values, where column names are the keys
+//            ContentValues values = new ContentValues();
+//            values.put(SQLContract.MessageTable.COLUMN_RECIPIENT, "Sharon Lee");
+//            values.put(SQLContract.MessageTable.COLUMN_PHONE_NUMBER, "6475237244");
+//            values.put(SQLContract.MessageTable.COLUMN_LATITUDE, 45);
+//            values.put(SQLContract.MessageTable.COLUMN_LONGITUDE, 55);
+//            values.put(SQLContract.MessageTable.COLUMN_SENT_FLAG, 0);
+//            values.put(SQLContract.MessageTable.COLUMN_TIME_CREATED,"null");
+//            values.put(SQLContract.MessageTable.COLUMN_TIME_SENT,"null");
+//
+//
+//// Insert the new row, returning the primary key value of the new row
+//            long newRowId;
+//            newRowId = db.insert(
+//                    SQLContract.MessageTable.TABLE_NAME,
+//                    null,
+//                    values);
+//
+//
+//
+//
+//            Toast.makeText(getApplicationContext(), "works?",
+//                    Toast.LENGTH_LONG).show();
+//
+//
+//        }
+//        catch(SQLException ex) {
+//            String message = ex.getMessage();
+//            Toast.makeText(getApplicationContext(), ex.getMessage(),
+//                    Toast.LENGTH_LONG).show();
+//        }
+
     }
 
+
+    public double getLatitude() {
+        DbExecutor exec = new DbExecutor(getApplicationContext());
+        SQLiteDatabase db = exec.getReadableDatabase();
+
+        String[] results = {
+                SQLContract.MessageTable.COLUMN_LATITUDE
+        };
+
+        Cursor cur = db.query(
+                SQLContract.MessageTable.TABLE_NAME,
+                results,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        cur.moveToFirst();
+
+        double lat = cur.getDouble(cur.getColumnIndex(SQLContract.MessageTable.COLUMN_LATITUDE));
+
+        return lat;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

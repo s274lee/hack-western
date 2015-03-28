@@ -14,7 +14,7 @@ public class SQLScripts {
                     SQLContract.MessageTable.COLUMN_TIME_SENT + " TEXT" + COMMA_SEP +
                     SQLContract.MessageTable.COLUMN_SENT_FLAG + " INTEGER" + COMMA_SEP +
                     SQLContract.MessageTable.COLUMN_LONGITUDE + " REAL" + COMMA_SEP +
-                    SQLContract.MessageTable.COLUMN_LATITUDE + " REAL" + COMMA_SEP +
+                    SQLContract.MessageTable.COLUMN_LATITUDE + " REAL" +
             " )";
 
     public static final String SQL_DELETE_MESSAGE_TABLE =
@@ -28,6 +28,8 @@ public class SQLScripts {
             SQLContract.MessageTable.COLUMN_TIME_SENT + COMMA_SEP +
             SQLContract.MessageTable.COLUMN_SENT_FLAG + COMMA_SEP +
             SQLContract.MessageTable.COLUMN_LONGITUDE + COMMA_SEP +
-            SQLContract.MessageTable.COLUMN_LATITUDE + COMMA_SEP +
+            SQLContract.MessageTable.COLUMN_LATITUDE +
             ") VALUES ('Sharon Lee', 6472946538, 'null', 'null', 0, 45.4, 75.66)";
+
+     public static final String SQL_SELECT_MESSAGE_TABLE = "SELECT latitude FROM "+ SQLContract.MessageTable.TABLE_NAME;
 }

@@ -2,6 +2,8 @@ package hackwestern.hackwestern;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,12 +31,14 @@ public class Listview extends ActionBarActivity {
         setContentView(R.layout.activity_listview);
 
         final ListView listview = (ListView) findViewById(R.id.Listview);
+        //String[] values = getNames();
         String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
                 "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
                 "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
                 "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
                 "Android", "iPhone", "WindowsMobile" };
         final ArrayList<String> list = new ArrayList<String>();
+        //list.add("Create Textloc");
         for (int i = 0; i < values.length; ++i) {
             list.add(values[i]);
         }
@@ -59,7 +63,12 @@ public class Listview extends ActionBarActivity {
                             }
                         });
                  */
-                showMessage(view);
+
+                // I give the intent to a different activity
+                Intent intent = new Intent(Listview.this, MainActivity.class);
+                String message = Integer.toString(position);
+                //intent.putExtra(EXTRA_MESSAGE, message );
+                startActivity(intent);
 
             }
 
@@ -91,4 +100,33 @@ public class Listview extends ActionBarActivity {
 
     }
 
+/*
+    // Produces the ArrayList<String> made of existing Textloc names
+    public String[] getNames() {
+        DbExecutor exec = new DbExecutor(getApplicationContext());
+        SQLiteDatabase db = exec.getReadableDatabase();
+
+        String[] results = {
+                SQLContract.MessageTable.COLUMN_RECIPIENT
+        };
+
+        Cursor cur = db.query(
+                SQLContract.MessageTable.TABLE_NAME,
+                results,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        cur.moveToFirst();
+
+        // TODO: change this to handle multiple entries from the database
+        String name = cur.getString(cur.getColumnIndex(SQLContract.MessageTable.COLUMN_RECIPIENT));
+        ArrayList<String> results = new ArrayList<String>();
+        results.add(name);
+        return results;
+    }
+*/
 }

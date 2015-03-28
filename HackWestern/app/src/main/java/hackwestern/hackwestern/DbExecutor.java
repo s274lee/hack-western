@@ -27,4 +27,8 @@ public class DbExecutor extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
+
+    public void insertMockData(SQLiteDatabase db){
+        db.execSQL(SQLScripts.SQL_INSERT_MESSAGE_TABLE);
+    }
 }

@@ -6,9 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -18,62 +20,65 @@ import java.util.List;
 
 public class Listview extends ActionBarActivity {
 
-    /** Called when the user clicks the list item **/
-    public void showMessage(View view) {
-        // I give the intent to a different activity
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
+    private ListView listview;
+    private ArrayList<String> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listview);
 
-        final ListView listview = (ListView) findViewById(R.id.Listview);
-        //String[] values = getNames();
-        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+        listview = (ListView) findViewById(R.id.Listview);
+        /*String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
                 "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
                 "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
                 "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
                 "Android", "iPhone", "WindowsMobile" };
-        final ArrayList<String> list = new ArrayList<String>();
-        //list.add("Create Textloc");
+        */
+        list = new ArrayList<String>();
+        list.add("Create Textloc");
+        ArrayList<String> secondlist = getNames();
+        list.addAll(secondlist);
+        /*
         for (int i = 0; i < values.length; ++i) {
             list.add(values[i]);
         }
-        final StableArrayAdapter adapter = new StableArrayAdapter(this,
-                android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(adapter);
+        */
+
+//        final StableArrayAdapter adapter = new StableArrayAdapter(this,
+//                android.R.layout.simple_list_item_1, list);
+//        listview.setAdapter(adapter);
+
+        listview.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, list));
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
             int position, long id) {
-                /*
-                final String item = (String) parent.getItemAtPosition(position);
-                view.animate().setDuration(2000).alpha(0)
-                        .withEndAction(new Runnable() {
-                            @Override
-                            public void run() {
-                                list.remove(item);
-                                adapter.notifyDataSetChanged();
-                                view.setAlpha(1);
-                            }
-                        });
-                 */
 
-                // I give the intent to a different activity
+                // Give the intent to the textloc form activity
                 Intent intent = new Intent(Listview.this, MainActivity.class);
-                String message = Integer.toString(position);
-                //intent.putExtra(EXTRA_MESSAGE, message );
                 startActivity(intent);
 
             }
 
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Probably resumed after adding a Textloc
+        // Must update the list of names and the adapter
+        list = new ArrayList<String>();
+        list.add("Create Textloc");
+        ArrayList<String> secondlist = getNames();
+        list.addAll(secondlist);
+        ((BaseAdapter) listview.getAdapter()).notifyDataSetChanged();
     }
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
@@ -100,9 +105,8 @@ public class Listview extends ActionBarActivity {
 
     }
 
-/*
     // Produces the ArrayList<String> made of existing Textloc names
-    public String[] getNames() {
+    public ArrayList<String> getNames() {
         DbExecutor exec = new DbExecutor(getApplicationContext());
         SQLiteDatabase db = exec.getReadableDatabase();
 
@@ -124,9 +128,14 @@ public class Listview extends ActionBarActivity {
 
         // TODO: change this to handle multiple entries from the database
         String name = cur.getString(cur.getColumnIndex(SQLContract.MessageTable.COLUMN_RECIPIENT));
-        ArrayList<String> results = new ArrayList<String>();
-        results.add(name);
-        return results;
+        ArrayList<String> namelist = new ArrayList<String>();
+        Log.d("name is", name);
+        namelist.add(name);
+        return namelist;
+
+
+//        ArrayList<String> namelist = new ArrayList<String>();
+//        namelist.add("lollilollipop");
+//        return namelist;
     }
-*/
 }

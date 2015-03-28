@@ -20,19 +20,19 @@ import android.database.SQLException;
 
 public class MainActivity extends ActionBarActivity {
 
-    Button buttonSend;
-    EditText editTextSms;
-    EditText editTextPhone;
+//    Button buttonSend;
+//    EditText editTextSms;
+//    EditText editTextPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        double lat = getLatitude();
-
-        Toast.makeText(getApplicationContext(), String.valueOf(lat),
-                   Toast.LENGTH_LONG).show();
+//        double lat = getLatitude();
+//
+//        Toast.makeText(getApplicationContext(), String.valueOf(lat),
+//                   Toast.LENGTH_LONG).show();
 //        buttonClick();
 //
 //        getLocation();
@@ -126,22 +126,22 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void buttonClick() {
-        buttonSend = (Button) findViewById(R.id.buttonSend);
-        editTextPhone = (EditText) findViewById(R.id.editTextPhone);
-        editTextSms = (EditText) findViewById(R.id.editTextSms);
-
-        buttonSend.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String phone = editTextPhone.getText().toString();
-                String message = editTextSms.getText().toString();
-
-                SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage(phone, null, message, null,null);
-                Toast.makeText(getApplicationContext(), "Congrats, message send!",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+//        buttonSend = (Button) findViewById(R.id.buttonSend);
+//        editTextPhone = (EditText) findViewById(R.id.editTextPhone);
+//        editTextSms = (EditText) findViewById(R.id.editTextSms);
+//
+//        buttonSend.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String phone = editTextPhone.getText().toString();
+//                String message = editTextSms.getText().toString();
+//
+//                SmsManager smsManager = SmsManager.getDefault();
+//                smsManager.sendTextMessage(phone, null, message, null,null);
+//                Toast.makeText(getApplicationContext(), "Congrats, message send!",
+//                        Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
 
     public void getLocation() {

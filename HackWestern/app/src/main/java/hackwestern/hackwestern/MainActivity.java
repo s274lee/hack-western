@@ -1,5 +1,6 @@
 package hackwestern.hackwestern;
 
+import android.content.Intent;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,6 +28,9 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+
+        // Set the text view as the activity layout
         setContentView(R.layout.activity_main);
 
 //        double lat = getLatitude();
@@ -74,7 +78,7 @@ public class MainActivity extends ActionBarActivity {
 //            Toast.makeText(getApplicationContext(), ex.getMessage(),
 //                    Toast.LENGTH_LONG).show();
 //        }
-
+//
     }
 
 

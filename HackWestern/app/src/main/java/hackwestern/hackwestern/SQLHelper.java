@@ -27,12 +27,12 @@ public class SQLHelper {
                 "DROP TABLE IF EXISTS " + SQLContract.MessageTable.TABLE_NAME;
     }
 
-    public class FeedReaderDbHelper extends SQLiteOpenHelper {
+    public class DbExecutor extends SQLiteOpenHelper {
         // If you change the database schema, you must increment the database version.
         public static final int DATABASE_VERSION = 1;
         public static final String DATABASE_NAME = "HackWestern.db";
 
-        public FeedReaderDbHelper(Context context) {
+        public DbExecutor(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
         public void onCreate(SQLiteDatabase db) {

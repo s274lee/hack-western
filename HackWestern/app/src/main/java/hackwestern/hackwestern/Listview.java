@@ -13,10 +13,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,7 +31,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-
 public class Listview extends ActionBarActivity {
 
     private ListView listview;
@@ -37,34 +40,26 @@ public class Listview extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listview);
+        View buttonView = findViewById(R.id.createtextloc);
+        buttonView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Give the intent to the textloc form activity
+                Intent intent = new Intent(Listview.this, ContactActivity.class);
+                startActivity(intent);
+            }
+        });
 
        // buildDatabase();
         sendMessages();
        //ArrayList<String> list = getNames();
 
         listview = (ListView) findViewById(R.id.Listview);
-        /*String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-                "Android", "iPhone", "WindowsMobile" };
-        */
-        list = new ArrayList<String>();
-        list.add("Create Textloc");
-//        ArrayList<String> secondlist = getNames();
-//        list.addAll(secondlist);
-        /*
-        for (int i = 0; i < values.length; ++i) {
-            list.add(values[i]);
-        }
-        */
 
-//        final StableArrayAdapter adapter = new StableArrayAdapter(this,
-//                android.R.layout.simple_list_item_1, list);
-//        listview.setAdapter(adapter);
+        list = getNames();
 
         listview.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, list));
+                android.R.layout.simple_list_item_1, android.R.id.text1, list));
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -73,7 +68,7 @@ public class Listview extends ActionBarActivity {
             int position, long id) {
 
                 // Give the intent to the textloc form activity
-                Intent intent = new Intent(Listview.this, MainActivity.class);
+                Intent intent = new Intent(Listview.this, ContactActivity.class);
                 startActivity(intent);
 
             }
@@ -82,6 +77,7 @@ public class Listview extends ActionBarActivity {
 
     }
 
+<<<<<<< HEAD
     public void buildDatabase() {
         try {
             DbExecutor exec = new DbExecutor(getApplicationContext());
@@ -110,6 +106,8 @@ public class Listview extends ActionBarActivity {
 //        ((BaseAdapter) listview.getAdapter()).notifyDataSetChanged();
 //    }
 
+=======
+>>>>>>> e80a050aad22a5b2ba2cf129307b0308dc8adaae
     private class StableArrayAdapter extends ArrayAdapter<String> {
 
         HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
@@ -140,7 +138,7 @@ public class Listview extends ActionBarActivity {
         SQLiteDatabase db = exec.getReadableDatabase();
 
         String[] results = {
-                SQLContract.MessageTable.COLUMN_RECIPIENT
+                SQLContract.MessageTable.COLUMN_SENT_FLAG
         };
 
         Cursor cur = db.query(
@@ -155,17 +153,53 @@ public class Listview extends ActionBarActivity {
 
         cur.moveToFirst();
 
-        // TODO: change this to handle multiple entries from the database
-        String name = cur.getString(cur.getColumnIndex(SQLContract.MessageTable.COLUMN_RECIPIENT));
+        // Create the list to return
         ArrayList<String> namelist = new ArrayList<String>();
-        Log.d("name is", name);
+        String name = "";
+
+        // Checks if the database table has any rows
+//        if (cur.getCount() > 0) {
+//            namelist.add("cur has more than 0 rows");
+//        } else {
+//            namelist.add("cur has 0 rows");
+//        }
+
+        // TODO: change this to handle multiple entries from the database
+        // Get the sent flag status
+        Integer flag = cur.getInt(cur.getColumnIndex(SQLContract.MessageTable.COLUMN_SENT_FLAG));
+        if (flag == 0) {
+            name += "Pending: ";
+        } else if (flag == 1) {
+            name += "Sent: ";
+        } else {
+            name += "Weird: ";
+        }
+
+        // Getting the recipient's name
+        String[] secondresults = {
+                SQLContract.MessageTable.COLUMN_RECIPIENT
+        };
+
+        Cursor secondcur = db.query(
+                SQLContract.MessageTable.TABLE_NAME,
+                secondresults,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        secondcur.moveToFirst();
+
+        name += secondcur.getString(secondcur.getColumnIndex(SQLContract.MessageTable.COLUMN_RECIPIENT));
+
         namelist.add(name);
         return namelist;
 
-
-//        ArrayList<String> namelist = new ArrayList<String>();
 //        namelist.add("lollilollipop");
 //        return namelist;
+
     }
 
 

@@ -15,5 +15,9 @@
     <string name="send_text">Schedule Message</string>
 
     <string name="title_activity_listview">Listview</string>
+    <string name="title_activity_contact">ContactActivity</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

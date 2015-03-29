@@ -4,5 +4,38 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
     </style>
+    <style name="content_wrapping">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <color name="custom_theme_color">#b0b0ff</color>
+    <style name="main_page">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:windowBackground">@color/custom_theme_color</item>
+
+    </style>
+
+
+    <style name="BackgroundColor">
+        <item name="android:windowBackground">@color/custom_theme_color</item>
+    </style>
+
+    <color name="send_button_color">#04B404</color>
+
+    <style name="content_wrapping.button">
+        <item name="android:text"></item>
+        <item name="android:background">@color/send_button_color</item>
+    </style>
+
+    <style name="top_margin">
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+
 
 </resources>

@@ -38,8 +38,8 @@ public class Listview extends ActionBarActivity {
         */
         list = new ArrayList<String>();
         list.add("Create Textloc");
-        ArrayList<String> secondlist = getNames();
-        list.addAll(secondlist);
+//        ArrayList<String> secondlist = getNames();
+//        list.addAll(secondlist);
         /*
         for (int i = 0; i < values.length; ++i) {
             list.add(values[i]);
@@ -69,18 +69,18 @@ public class Listview extends ActionBarActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // Probably resumed after adding a Textloc
-        // Must update the list of names and the adapter
-        list = new ArrayList<String>();
-        list.add("Create Textloc");
-        ArrayList<String> secondlist = getNames();
-        list.addAll(secondlist);
-        ((BaseAdapter) listview.getAdapter()).notifyDataSetChanged();
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        // Probably resumed after adding a Textloc
+//        // Must update the list of names and the adapter
+//        list = new ArrayList<String>();
+//        list.add("Create Textloc");
+//        ArrayList<String> secondlist = getNames();
+//        list.addAll(secondlist);
+//        ((BaseAdapter) listview.getAdapter()).notifyDataSetChanged();
+//    }
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
 

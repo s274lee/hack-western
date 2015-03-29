@@ -34,13 +34,13 @@ public class MainActivity extends ActionBarActivity {
         // Set the text view as the activity layout
         setContentView(R.layout.activity_main);
 
-        double lat = getLatitude();
-
-        Toast.makeText(getApplicationContext(), String.valueOf(lat),
-                   Toast.LENGTH_LONG).show();
-//        buttonClick();
+//        double lat = getLatitude();
 //
-//        getLocation();
+//        Toast.makeText(getApplicationContext(), String.valueOf(lat),
+//                   Toast.LENGTH_LONG).show();
+        buttonClick();
+
+        getLocation();
 
 //        try {
 //            DbExecutor exec = new DbExecutor(getApplicationContext());
@@ -81,6 +81,7 @@ public class MainActivity extends ActionBarActivity {
 //        }
 //
         contactButtonClick();
+
     }
 
 
@@ -132,22 +133,22 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void buttonClick() {
-        buttonSend = (Button) findViewById(R.id.buttonSend);
-        editTextPhone = (EditText) findViewById(R.id.editTextPhone);
-        editTextSms = (EditText) findViewById(R.id.editTextSms);
-
-        buttonSend.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String phone = editTextPhone.getText().toString();
-                String message = editTextSms.getText().toString();
-
-                SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage(phone, null, message, null,null);
-                Toast.makeText(getApplicationContext(), "Congrats, message send!",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
+//        buttonSend = (Button) findViewById(R.id.buttonSend);
+//        editTextPhone = (EditText) findViewById(R.id.editTextPhone);
+//        editTextSms = (EditText) findViewById(R.id.editTextSms);
+//
+//        buttonSend.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String phone = editTextPhone.getText().toString();
+//                String message = editTextSms.getText().toString();
+//
+//                SmsManager smsManager = SmsManager.getDefault();
+//                smsManager.sendTextMessage(phone, null, message, null,null);
+//                Toast.makeText(getApplicationContext(), "Congrats, message send!",
+//                        Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
 
     public void contactButtonClick() {

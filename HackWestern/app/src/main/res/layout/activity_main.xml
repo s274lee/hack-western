@@ -1,37 +1,64 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearLayout1"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
 
-    <TextView android:text="Welcome! In this simple app you can send a message by specifying a phone number
-    and message (HOPE THIS WORKS.)" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView android:text="Enter a text message below"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    style="@style/main_page">
+
+    <TextView
+        android:text="@string/text_loc_title"
+        style="@style/content_wrapping"
+        android:textSize="@dimen/abc_text_size_large_material"/>
+
+    <TextView
+        android:text="@string/recipient_details"
+        android:textStyle="bold"
+        style="@style/content_wrapping"
+
+        />
+    <LinearLayout
+        style="@style/content_wrapping">
+        <TextView
+            android:text="@string/recipient_details_name"
+
+            style="@style/content_wrapping"/>
+
+        <TextView
+            android:text="@string/recipient_details_number"
+
+            style="@style/content_wrapping"/>
+
+    </LinearLayout>
+
+
+    <!--<TextView android:text="Enter a phone number to send the message to below"-->
+        <!--style="@style/content_wrapping" />-->
+
+    <!--<EditText-->
+        <!--android:id="@+id/editTextPhone"-->
+        <!--android:hint="@string/phone_number"-->
+        <!--style="@style/content_wrapping" />-->
+
+    <TextView
+        android:text="Enter a text message below"
+        style="@style/content_wrapping"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTextSms"
-        android:text="Enter a message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:hint="@string/message_action"
+        style="@style/content_wrapping"
+        />
 
-    <TextView android:text="Enter a phone number to send the message to below"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <TextView
+        android:text="@string/location_prompt"
+        android:textStyle="bold"
+        style="@style/content_wrapping"/>
 
-    <EditText
-        android:id="@+id/editTextPhone"
-        android:text="Phone number here"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <!--Insert google map view here-->
 
     <Button
         android:id="@+id/buttonSend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send Message"
+        android:text="@string/send_text"
+        style="@style/content_wrapping.button"
         />
 
     <Button
@@ -40,6 +67,5 @@
         android:layout_height="wrap_content"
         android:text="Send Message"
         />
-
 
 </LinearLayout>

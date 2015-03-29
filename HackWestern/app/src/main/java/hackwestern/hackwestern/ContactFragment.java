@@ -11,6 +11,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,10 +71,10 @@ public class ContactFragment extends Fragment implements
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        Log.v("test","@@@@@@@ In the Fragment");
         // Gets the ListView from the View list of the parent activity
         mContactsList =
-                (ListView) getActivity().findViewById(R.id.listView_contact_activity);
+                (ListView) getActivity().findViewById(R.id.contact_listView);
 
         // Set the item click listener to be the current fragment.
         mContactsList.setOnItemClickListener(this);
@@ -90,7 +91,7 @@ public class ContactFragment extends Fragment implements
                 0);
         // Sets the adapter for the ListView
         mContactsList.setAdapter(mCursorAdapter);
-
+//        Log.v("test", android.R.id.text1);
     }
 
     @SuppressLint("InlinedApi")

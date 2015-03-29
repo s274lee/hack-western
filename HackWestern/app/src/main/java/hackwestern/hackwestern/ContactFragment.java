@@ -2,6 +2,7 @@ package hackwestern.hackwestern;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -22,8 +23,14 @@ import android.provider.ContactsContract;
 
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class ContactFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
@@ -61,6 +68,12 @@ public class ContactFragment extends Fragment implements
     // An adapter that binds the result Cursor to the ListView
     private SimpleCursorAdapter mCursorAdapter;
 
+
+//    private ArrayList<String> list;
+
+
+
+
     // Empty public constructor, required by the system
     public ContactFragment() {}
 
@@ -81,7 +94,7 @@ public class ContactFragment extends Fragment implements
                 (ListView) getActivity().findViewById(R.id.contact_listView);
 
 
-        // Gets a CursorAdapter
+//        Gets a CursorAdapter
         mCursorAdapter = new SimpleCursorAdapter(
                 getActivity(),
                 android.R.layout.simple_list_item_1,
@@ -90,29 +103,101 @@ public class ContactFragment extends Fragment implements
                 TO_IDS,
                 0);
 
+
+
+
+        /*
+        final ArrayList<String> list = new ArrayList<String>();
+        String[] values = FROM_COLUMNS;
+
+        for (int i = 0; i < values.length; ++i) {
+            list.add(values[i]);
+        }
+
+
+        Context context = getActivity();
+        StableArrayAdapter mCursorAdapter = new StableArrayAdapter(context, android.R.layout.simple_list_item_1, list);
+        mContactsList.setAdapter(mCursorAdapter);
+*/
+
+
+
+
+
         // Initializes the loader
         getLoaderManager().initLoader(0, null, this);
 
         // Sets the adapter for the ListView
         mContactsList.setAdapter(mCursorAdapter);
 //        Log.v("test", android.R.id.text1);
+
+
         // Set the item click listener to be the current fragment.
         mContactsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-
+            @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-                Context context = getActivity();
-
+//                Context context = getActivity();
+//                TextView c = (TextView) view.findViewById(R.id.text);
+//                String playerChanged = c.getText().toString();
+//                Log.v("test", data);
                 // Give the intent to the mainform activity
-                Intent intent = new Intent(ContactFragment.this.getActivity(), MainActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(ContactFragment.this.getActivity(), MainActivity.class);
+                //intent.putExtra("Name", )
+                //startActivity(intent);
+                   
+
+                   Cursor cursor = (Cursor)parent.getItemAtPosition(position);
+                   String name = cursor.getString(0);
+                   String _id = cursor.getString(cursor.getColumnIndex("display_name"));
+                   intent.putExtra("Name", )
+//                final String item = (String) parent.getItemAtPosition(position);
+//                view.animate().setDuration(2000).alpha(0)
+//                        .withEndAction(new Runnable() {
+//                            @Override
+//                        public void run() {
+//                                list.remove(item);
+//                                view.setAlpha(1);
+//                            }
+//                        });
+
+                 Log.v("Test", _id);
+
             }
 
         });
     }
 
-    @SuppressLint("InlinedApi")
+    /*
+    private class StableArrayAdapter extends ArrayAdapter<String> {
+
+        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+
+        public StableArrayAdapter(Context context, int textViewResourceId,
+                                  List<String> objects) {
+            super(context, textViewResourceId, objects);
+            for (int i = 0; i < objects.size(); ++i) {
+                mIdMap.put(objects.get(i), i);
+            }
+        }
+
+        @Override
+        public long getItemId(int position) {
+            String item = getItem(position);
+            return mIdMap.get(item);
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+    }
+    */
+
+
+        @SuppressLint("InlinedApi")
     private static final String[] PROJECTION =
             {
                     ContactsContract.Contacts._ID,
@@ -191,14 +276,28 @@ public class ContactFragment extends Fragment implements
         );
     }
 
+
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         // Put the result Cursor in the adapter for the ListView
+
+
+
+
+
         mCursorAdapter.swapCursor(cursor);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         // Delete the reference to the existing Cursor
+
+
+
+
+
+
+
+
         mCursorAdapter.swapCursor(null);
 
     }

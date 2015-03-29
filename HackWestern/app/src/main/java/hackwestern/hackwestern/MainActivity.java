@@ -34,13 +34,14 @@ public class MainActivity extends ActionBarActivity {
         // Set the text view as the activity layout
         setContentView(R.layout.activity_main);
 
-//        double lat = getLatitude();
-//
-//        Toast.makeText(getApplicationContext(), String.valueOf(lat),
-//                   Toast.LENGTH_LONG).show();
-        buttonClick();
+        double lat = getLatitude();
 
-        getLocation();
+        Toast.makeText(getApplicationContext(), String.valueOf(lat),
+                   Toast.LENGTH_LONG).show();
+//        buttonClick();
+//
+//        getLocation();
+//
 
 //        try {
 //            DbExecutor exec = new DbExecutor(getApplicationContext());
@@ -66,9 +67,6 @@ public class MainActivity extends ActionBarActivity {
 //                    null,
 //                    values);
 //
-//
-//
-//
 //            Toast.makeText(getApplicationContext(), "works?",
 //                    Toast.LENGTH_LONG).show();
 //
@@ -79,7 +77,7 @@ public class MainActivity extends ActionBarActivity {
 //            Toast.makeText(getApplicationContext(), ex.getMessage(),
 //                    Toast.LENGTH_LONG).show();
 //        }
-//
+
         contactButtonClick();
 
     }

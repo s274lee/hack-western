@@ -38,8 +38,8 @@ public class Listview extends ActionBarActivity {
         */
         list = new ArrayList<String>();
         list.add("Create Textloc");
-//        ArrayList<String> secondlist = getNames();
-//        list.addAll(secondlist);
+        ArrayList<String> secondlist = getNames();
+        list.addAll(secondlist);
         /*
         for (int i = 0; i < values.length; ++i) {
             list.add(values[i]);
@@ -51,7 +51,7 @@ public class Listview extends ActionBarActivity {
 //        listview.setAdapter(adapter);
 
         listview.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, list));
+                android.R.layout.simple_list_item_1, android.R.id.text1, list));
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -112,7 +112,7 @@ public class Listview extends ActionBarActivity {
         SQLiteDatabase db = exec.getReadableDatabase();
 
         String[] results = {
-                SQLContract.MessageTable.COLUMN_RECIPIENT
+                SQLContract.MessageTable.COLUMN_SENT_FLAG
         };
 
         Cursor cur = db.query(
@@ -127,16 +127,52 @@ public class Listview extends ActionBarActivity {
 
         cur.moveToFirst();
 
-        // TODO: change this to handle multiple entries from the database
-        String name = cur.getString(cur.getColumnIndex(SQLContract.MessageTable.COLUMN_RECIPIENT));
+        // Create the list to return
         ArrayList<String> namelist = new ArrayList<String>();
-        Log.d("name is", name);
+        String name = "";
+
+        // Checks if the database table has any rows
+//        if (cur.getCount() > 0) {
+//            namelist.add("cur has more than 0 rows");
+//        } else {
+//            namelist.add("cur has 0 rows");
+//        }
+
+        // TODO: change this to handle multiple entries from the database
+        // Get the sent flag status
+        Integer flag = cur.getInt(cur.getColumnIndex(SQLContract.MessageTable.COLUMN_SENT_FLAG));
+        if (flag == 0) {
+            name += "Pending: ";
+        } else if (flag == 1) {
+            name += "Sent: ";
+        } else {
+            name += "Weird: ";
+        }
+
+        // Getting the recipient's name
+        String[] secondresults = {
+                SQLContract.MessageTable.COLUMN_RECIPIENT
+        };
+
+        Cursor secondcur = db.query(
+                SQLContract.MessageTable.TABLE_NAME,
+                secondresults,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        secondcur.moveToFirst();
+
+        name += secondcur.getString(secondcur.getColumnIndex(SQLContract.MessageTable.COLUMN_RECIPIENT));
+
         namelist.add(name);
         return namelist;
 
-
-//        ArrayList<String> namelist = new ArrayList<String>();
 //        namelist.add("lollilollipop");
 //        return namelist;
+
     }
 }

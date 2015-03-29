@@ -125,10 +125,8 @@ public class Listview extends ActionBarActivity {
             LocationListener ls = new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-//                    Double longitude = location.getLongitude();
-//                    Double latitude = location.getLatitude();
-                    Double longitude = 55.0;
-                    Double latitude = 45.0;
+                   Double longitude = location.getLongitude();
+                   Double latitude = location.getLatitude();
 
                     ArrayList<Message> messages = getMessages();
 

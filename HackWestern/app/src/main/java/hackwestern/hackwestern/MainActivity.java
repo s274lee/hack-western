@@ -29,6 +29,8 @@ public class MainActivity extends ActionBarActivity {
     Button contactButton;
     String name;
     String phone_number;
+    String lat;
+    String lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,9 +100,21 @@ public class MainActivity extends ActionBarActivity {
         contactButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MapActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
+
             }
         });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                lng = data.getStringExtra("longitude");
+                lat = data.getStringExtra("latitude");
+                // use 'myValue' return value here
+            }
+        }
     }
 
     public void saveMessage() {
@@ -126,8 +140,8 @@ public class MainActivity extends ActionBarActivity {
             values.put(SQLContract.MessageTable.COLUMN_RECIPIENT, recipientName);
             values.put(SQLContract.MessageTable.COLUMN_PHONE_NUMBER, recipientNumber);
             values.put(SQLContract.MessageTable.COLUMN_MESSAGE, message);
-            values.put(SQLContract.MessageTable.COLUMN_LATITUDE, 45); //TODO: get actual longitude and latitude values
-            values.put(SQLContract.MessageTable.COLUMN_LONGITUDE, 55);
+            values.put(SQLContract.MessageTable.COLUMN_LATITUDE, lat); //TODO: get actual longitude and latitude values
+            values.put(SQLContract.MessageTable.COLUMN_LONGITUDE, lng);
             values.put(SQLContract.MessageTable.COLUMN_SENT_FLAG, 0);
             values.put(SQLContract.MessageTable.COLUMN_TIME_CREATED,creationDateStamp);
             values.put(SQLContract.MessageTable.COLUMN_TIME_SENT,"null");

@@ -24,6 +24,7 @@ public class MainActivity extends ActionBarActivity {
     Button buttonSend;
     EditText editTextSms;
     EditText editTextPhone;
+    Button contactButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,7 @@ public class MainActivity extends ActionBarActivity {
 //                    Toast.LENGTH_LONG).show();
 //        }
 //
+        contactButtonClick();
     }
 
 
@@ -147,6 +149,17 @@ public class MainActivity extends ActionBarActivity {
             }
         });
     }
+
+    public void contactButtonClick() {
+        contactButton = (Button) findViewById(R.id.contactButton);
+        contactButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ContactActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
 
     public void getLocation() {
         LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);

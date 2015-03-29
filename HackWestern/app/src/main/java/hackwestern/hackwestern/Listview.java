@@ -60,7 +60,7 @@ public class Listview extends ActionBarActivity {
             int position, long id) {
 
                 // Give the intent to the textloc form activity
-                Intent intent = new Intent(Listview.this, MainActivity.class);
+                Intent intent = new Intent(Listview.this, ContactActivity.class);
                 startActivity(intent);
 
             }

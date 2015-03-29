@@ -2,6 +2,7 @@ package hackwestern.hackwestern;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -76,22 +77,34 @@ public class ContactFragment extends Fragment implements
         mContactsList =
                 (ListView) getActivity().findViewById(R.id.contact_listView);
 
-        // Set the item click listener to be the current fragment.
-        mContactsList.setOnItemClickListener(this);
-
-        // Initializes the loader
-        getLoaderManager().initLoader(0, null, this);
 
         // Gets a CursorAdapter
         mCursorAdapter = new SimpleCursorAdapter(
                 getActivity(),
                 R.layout.contacts_list_item,
                 null,
-                FROM_COLUMNS, TO_IDS,
+                FROM_COLUMNS,
+                TO_IDS,
                 0);
+
+        // Initializes the loader
+        getLoaderManager().initLoader(0, null, this);
+
         // Sets the adapter for the ListView
         mContactsList.setAdapter(mCursorAdapter);
 //        Log.v("test", android.R.id.text1);
+        // Set the item click listener to be the current fragment.
+        mContactsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+
+                // Give the intent to the mainform activity
+
+            }
+
+        });
     }
 
     @SuppressLint("InlinedApi")
@@ -114,13 +127,18 @@ public class ContactFragment extends Fragment implements
     // Defines the text expression
     @SuppressLint("InlinedApi")
     private static final String SELECTION =
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
+            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
                     ContactsContract.Contacts.DISPLAY_NAME_PRIMARY + " LIKE ?" :
-                    ContactsContract.Contacts.DISPLAY_NAME + " LIKE ?";
+                    ContactsContract.Contacts.DISPLAY_NAME + " LIKE ?") +
+            " AND IN_DEFAULT_DIRECTORY = ?";
+
     // Defines a variable for the search string
     private String mSearchString;
     // Defines the array to hold values that replace the ?
-    private String[] mSelectionArgs = { mSearchString };
+    private String[] mSelectionArgs = {
+            mSearchString,
+            "1"
+    };
 
     @Override
     public void onItemClick(
@@ -135,6 +153,9 @@ public class ContactFragment extends Fragment implements
         mContactKey = cursor.getString(LOOKUP_KEY_INDEX);
         // Create the contact's content Uri
         mContactUri = ContactsContract.Contacts.getLookupUri(mContactId, mContactKey);
+
+        Intent intent = new Intent(ContactFragment.this.getActivity(), MainActivity.class);
+        startActivity(intent);
         /*
          * You can use mContactUri as the content URI for retrieving
          * the details for a contact.
@@ -147,7 +168,7 @@ public class ContactFragment extends Fragment implements
          * Makes search string into pattern and
          * stores it in the selection array
          */
-        mSelectionArgs[0] = "%" + mSearchString + "%";
+        mSelectionArgs[0] = "%";
         // Starts the query
         return new CursorLoader(
                 getActivity(),

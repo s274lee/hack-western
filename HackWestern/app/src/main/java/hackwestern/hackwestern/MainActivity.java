@@ -2,28 +2,29 @@ package hackwestern.hackwestern;
 
 import android.content.Intent;
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.telephony.SmsManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.database.SQLException;
+import java.text.SimpleDateFormat;
+import 	java.util.Date;
+import java.text.DateFormat;
 
 public class MainActivity extends ActionBarActivity {
 
-//    Button buttonSend;
-//    EditText editTextSms;
-//    EditText editTextPhone;
+    TextView repName; //change to just be the recipient name
+    TextView repNumber; //change to just be the recipient number
+    EditText editTextSms; //message to be sent
+    Button buttonSend; //Schedule message btn
+    //TODO: define longitude and latitude elements from the UI
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,79 +33,8 @@ public class MainActivity extends ActionBarActivity {
 
         // Set the text view as the activity layout
         setContentView(R.layout.activity_main);
+        scheduleMessageListener();
 
-//        double lat = getLatitude();
-//
-//        Toast.makeText(getApplicationContext(), String.valueOf(lat),
-//                   Toast.LENGTH_LONG).show();
-        buttonClick();
-
-        getLocation();
-
-        try {
-            DbExecutor exec = new DbExecutor(getApplicationContext());
-
-            // Gets the data repository in write mode
-            SQLiteDatabase db = exec.getWritableDatabase();
-
-// Create a new map of values, where column names are the keys
-            ContentValues values = new ContentValues();
-            values.put(SQLContract.MessageTable.COLUMN_RECIPIENT, "Sharon Lee");
-            values.put(SQLContract.MessageTable.COLUMN_PHONE_NUMBER, "6475237244");
-            values.put(SQLContract.MessageTable.COLUMN_LATITUDE, 45);
-            values.put(SQLContract.MessageTable.COLUMN_LONGITUDE, 55);
-            values.put(SQLContract.MessageTable.COLUMN_SENT_FLAG, 0);
-            values.put(SQLContract.MessageTable.COLUMN_TIME_CREATED,"null");
-            values.put(SQLContract.MessageTable.COLUMN_TIME_SENT,"null");
-
-
-// Insert the new row, returning the primary key value of the new row
-            long newRowId;
-            newRowId = db.insert(
-                    SQLContract.MessageTable.TABLE_NAME,
-                    null,
-                    values);
-
-
-
-
-            Toast.makeText(getApplicationContext(), "works?",
-                    Toast.LENGTH_LONG).show();
-
-
-        }
-        catch(SQLException ex) {
-            String message = ex.getMessage();
-            Toast.makeText(getApplicationContext(), ex.getMessage(),
-                    Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-
-    public double getLatitude() {
-        DbExecutor exec = new DbExecutor(getApplicationContext());
-        SQLiteDatabase db = exec.getReadableDatabase();
-
-        String[] results = {
-                SQLContract.MessageTable.COLUMN_LATITUDE
-        };
-
-        Cursor cur = db.query(
-                SQLContract.MessageTable.TABLE_NAME,
-                results,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-
-        cur.moveToFirst();
-
-        double lat = cur.getDouble(cur.getColumnIndex(SQLContract.MessageTable.COLUMN_LATITUDE));
-
-        return lat;
     }
 
     @Override
@@ -129,57 +59,66 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void buttonClick() {
-//        buttonSend = (Button) findViewById(R.id.buttonSend);
-//        editTextPhone = (EditText) findViewById(R.id.editTextPhone);
-//        editTextSms = (EditText) findViewById(R.id.editTextSms);
-//
-//        buttonSend.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String phone = editTextPhone.getText().toString();
-//                String message = editTextSms.getText().toString();
-//
-//                SmsManager smsManager = SmsManager.getDefault();
-//                smsManager.sendTextMessage(phone, null, message, null,null);
-//                Toast.makeText(getApplicationContext(), "Congrats, message send!",
-//                        Toast.LENGTH_LONG).show();
-//            }
-//        });
+    public void scheduleMessageListener() {
+        buttonSend = (Button) findViewById(R.id.buttonSend);
+
+        buttonSend.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveMessage();
+            }
+        });
     }
 
-    public void getLocation() {
-        LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+    private void saveMessage() {
+        repName = (TextView) findViewById(R.id.repName);
+        repNumber = (TextView) findViewById(R.id.repNumber);
+        editTextSms = (EditText) findViewById(R.id.editTextSms);
+        //TODO: get updated longitude and latitude values at this point
 
-        LocationListener ls = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                Double longitude = location.getLongitude();
-                Double latitude = location.getLatitude();
+        try {
 
-                Toast.makeText(getApplicationContext(),"Location detected. Longitude:"+longitude+" Latitude:"+latitude,
-                        Toast.LENGTH_LONG).show();
-            }
+            DbExecutor exec = new DbExecutor(getApplicationContext());
 
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-                Toast.makeText(getApplicationContext(),"stat change",
-                        Toast.LENGTH_LONG).show();
-            }
+            // Gets the data repository in write mode
+            SQLiteDatabase db = exec.getWritableDatabase();
 
-            @Override
-            public void onProviderEnabled(String provider) {
-                Toast.makeText(getApplicationContext(),"enabled",
-                        Toast.LENGTH_LONG).show();
-            }
+            // Create a new map of values, where column names are the keys
+            String recipientName = repName.getText().toString();
+            String recipientNumber = repNumber.getText().toString();
+            String message = editTextSms.getText().toString();
 
-            @Override
-            public void onProviderDisabled(String provider) {
-                Toast.makeText(getApplicationContext(),"disabled",
-                        Toast.LENGTH_LONG).show();
-            }
-        };
+            Date currentDate = new Date();
+            DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            String creationDateStamp = format.format(currentDate);
 
-        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,ls);
+            ContentValues values = new ContentValues();
+            values.put(SQLContract.MessageTable.COLUMN_RECIPIENT, "Hamrit");
+            values.put(SQLContract.MessageTable.COLUMN_PHONE_NUMBER, "6475237244");
+            values.put(SQLContract.MessageTable.COLUMN_MESSAGE, message);
+            values.put(SQLContract.MessageTable.COLUMN_LATITUDE, 45); //TODO: get actual longitude and latitude values
+            values.put(SQLContract.MessageTable.COLUMN_LONGITUDE, 55);
+            values.put(SQLContract.MessageTable.COLUMN_SENT_FLAG, 0);
+            values.put(SQLContract.MessageTable.COLUMN_TIME_CREATED,creationDateStamp);
+            values.put(SQLContract.MessageTable.COLUMN_TIME_SENT,"null");
+
+            // Insert the new row, returning the primary key value of the new row
+            long newRowId;
+            newRowId = db.insert(
+                    SQLContract.MessageTable.TABLE_NAME,
+                    null,
+                    values);
+
+            Toast.makeText(getApplicationContext(), "Message successfully scheduled!"+message,
+                    Toast.LENGTH_LONG).show();
+
+        }
+        catch(SQLException ex) {
+            Toast.makeText(getApplicationContext(), ex.getMessage(),
+                    Toast.LENGTH_LONG).show();
+        }
+
     }
+
+
 }

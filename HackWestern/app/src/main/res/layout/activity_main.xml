@@ -12,22 +12,19 @@
         android:text="@string/recipient_details"
         android:textStyle="bold"
         style="@style/content_wrapping"
-
         />
     <LinearLayout
-        style="@style/content_wrapping">
+        style="@style/content_wrapping"
+        >
         <TextView
+            android:id="@+id/repName"
             android:text="@string/recipient_details_name"
-
             style="@style/content_wrapping"/>
-
         <TextView
+            android:id="@+id/repNumber"
             android:text="@string/recipient_details_number"
-
             style="@style/content_wrapping"/>
-
     </LinearLayout>
-
 
     <!--<TextView android:text="Enter a phone number to send the message to below"-->
         <!--style="@style/content_wrapping" />-->

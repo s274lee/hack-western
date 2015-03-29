@@ -10,6 +10,7 @@ public class SQLScripts {
                     SQLContract.MessageTable._ID + " INTEGER PRIMARY KEY," +
                     SQLContract.MessageTable.COLUMN_RECIPIENT + " TEXT" + COMMA_SEP +
                     SQLContract.MessageTable.COLUMN_PHONE_NUMBER + " INTEGER" + COMMA_SEP +
+                    SQLContract.MessageTable.COLUMN_MESSAGE + " TEXT " + COMMA_SEP +
                     SQLContract.MessageTable.COLUMN_TIME_CREATED + " TEXT" + COMMA_SEP +
                     SQLContract.MessageTable.COLUMN_TIME_SENT + " TEXT" + COMMA_SEP +
                     SQLContract.MessageTable.COLUMN_SENT_FLAG + " INTEGER" + COMMA_SEP +
@@ -20,16 +21,10 @@ public class SQLScripts {
     public static final String SQL_DELETE_MESSAGE_TABLE =
             "DROP TABLE IF EXISTS " + SQLContract.MessageTable.TABLE_NAME;
 
-    public static final String SQL_INSERT_MESSAGE_TABLE = "INSERT INTO " +
-            SQLContract.MessageTable.TABLE_NAME + " (" +
-            SQLContract.MessageTable.COLUMN_RECIPIENT + COMMA_SEP +
-            SQLContract.MessageTable.COLUMN_PHONE_NUMBER + COMMA_SEP +
-            SQLContract.MessageTable.COLUMN_TIME_CREATED + COMMA_SEP +
-            SQLContract.MessageTable.COLUMN_TIME_SENT + COMMA_SEP +
-            SQLContract.MessageTable.COLUMN_SENT_FLAG + COMMA_SEP +
-            SQLContract.MessageTable.COLUMN_LONGITUDE + COMMA_SEP +
-            SQLContract.MessageTable.COLUMN_LATITUDE +
-            ") VALUES ('Sharon Lee', 6472946538, 'null', 'null', 0, 45.4, 75.66)";
-
      public static final String SQL_SELECT_MESSAGE_TABLE = "SELECT latitude FROM "+ SQLContract.MessageTable.TABLE_NAME;
+
+     public static final String SQL_SELECT_UNSENT_MESSAGES = "SELECT "+SQLContract.MessageTable._ID+ COMMA_SEP +
+             SQLContract.MessageTable.COLUMN_RECIPIENT + COMMA_SEP + SQLContract.MessageTable.COLUMN_PHONE_NUMBER + COMMA_SEP + SQLContract.MessageTable.COLUMN_MESSAGE + COMMA_SEP +
+             SQLContract.MessageTable.COLUMN_LONGITUDE + COMMA_SEP + SQLContract.MessageTable.COLUMN_LATITUDE + " FROM "+SQLContract.MessageTable.TABLE_NAME +
+             " WHERE "+SQLContract.MessageTable.COLUMN_SENT_FLAG + "=0";
 }

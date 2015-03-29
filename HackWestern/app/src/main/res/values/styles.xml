@@ -25,11 +25,12 @@
         <item name="android:windowBackground">@color/custom_theme_color</item>
     </style>
 
-    <color name="send_button_color">#04B404</color>
+    <color name="send_button_color">#5FB404</color>
 
     <style name="content_wrapping.button">
         <item name="android:text"></item>
         <item name="android:background">@color/send_button_color</item>
+        <item name="android:padding">10dp</item>
     </style>
 
     <style name="top_margin">

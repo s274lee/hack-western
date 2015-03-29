@@ -12,7 +12,7 @@
     <string name="phone_number">Enter a Phone Number</string>
     <string name="message_action">Enter a message</string>
     <string name="location_prompt">Send message when I am at</string>
-    <string name="send_text">Send Message</string>
+    <string name="send_text">Schedule Message</string>
 
     <string name="title_activity_listview">Listview</string>
 

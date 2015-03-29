@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Contacts;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -134,7 +135,7 @@ public class ContactFragment extends Fragment implements
             (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
                     ContactsContract.Contacts.DISPLAY_NAME_PRIMARY + " LIKE ?" :
                     ContactsContract.Contacts.DISPLAY_NAME + " LIKE ?") +
-            " AND IN_DEFAULT_DIRECTORY = ?";
+            " AND " + ContactsContract.Contacts.HAS_PHONE_NUMBER + " = ?";
 
     // Defines a variable for the search string
     private String mSearchString;

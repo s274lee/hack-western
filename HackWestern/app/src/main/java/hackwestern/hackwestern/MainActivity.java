@@ -37,7 +37,6 @@ public class MainActivity extends ActionBarActivity {
         // Set the text view as the activity layout
         setContentView(R.layout.activity_main);
         scheduleMessageListener();
-
     }
 
     @Override
@@ -84,6 +83,15 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
+    public void mapButtonClick() {
+        contactButton = (Button) findViewById(R.id.buttonMap);
+        contactButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MapActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
 
     public void saveMessage() {
         repName = (TextView) findViewById(R.id.repName);

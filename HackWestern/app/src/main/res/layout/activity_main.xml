@@ -50,7 +50,11 @@
         android:textStyle="bold"
         style="@style/content_wrapping"/>
 
-    <!--Insert google map view here-->
+    <Button
+        android:id="@+id/buttonMap"
+        android:text="@string/send_text"
+        style="@style/content_wrapping.button"
+        />
 
     <Button
         android:id="@+id/buttonSend"

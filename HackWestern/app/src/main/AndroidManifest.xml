@@ -36,6 +36,10 @@
             android:name=".ContactActivity"
             android:label="@string/title_activity_contact" >
         </activity>
+        <activity
+            android:name=".MapActivity"
+            android:label="@string/title_activity_map" >
+        </activity>
     </application>
 
 </manifest>

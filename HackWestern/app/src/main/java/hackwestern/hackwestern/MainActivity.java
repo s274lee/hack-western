@@ -37,6 +37,7 @@ public class MainActivity extends ActionBarActivity {
         // Set the text view as the activity layout
         setContentView(R.layout.activity_main);
         scheduleMessageListener();
+        mapButtonClick();
     }
 
     @Override

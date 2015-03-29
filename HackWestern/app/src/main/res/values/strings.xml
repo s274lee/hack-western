@@ -14,8 +14,8 @@
     <string name="location_prompt">Send message when I am at</string>
     <string name="send_text">Schedule Message</string>
 
-    <string name="title_activity_listview">Listview</string>
-    <string name="title_activity_contact">ContactActivity</string>
+    <string name="title_activity_listview">TextLoc</string>
+    <string name="title_activity_contact">Choose Contact</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

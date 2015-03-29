@@ -82,7 +82,7 @@ public class ContactFragment extends Fragment implements
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-       // Log.v("test","@@@@@@@ In the Fragment");
+        // Log.v("test","@@@@@@@ In the Fragment");
         // Gets the ListView from the View list of the parent activity
         mContactsList =
                 (ListView) getActivity().findViewById(R.id.contact_listView);
@@ -114,25 +114,52 @@ public class ContactFragment extends Fragment implements
 //                Context context = getActivity();
 //                TextView c = (TextView) view.findViewById(R.id.text);
 //                String playerChanged = c.getText().toString();
-                Cursor cursor = (Cursor)parent.getItemAtPosition(position);
-                String name = cursor.getString(0);
-                String _id = cursor.getString(cursor.getColumnIndex("display_name"));
+
+                ContentResolver cr = getActivity().getContentResolver();
+                Cursor cursor2  = (Cursor)parent.getItemAtPosition(position);
+//                String name = cursor2.getString(0);
+                String name = cursor2.getString(cursor2.getColumnIndex("display_name"));
+                String phoneNumber = new String();
+                String _id = cursor2.getString(cursor2.getColumnIndex("_id"));
+                String[] args = {_id};
+                Log.v("NO ", _id);
+
+                    Cursor pCur = cr.query(
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER},
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",
+                            args, null);
+                    while (pCur.moveToNext()) {
+                        phoneNumber = pCur.getString(pCur.getColumnIndex("data1"));
+                 }
+                    pCur.close();
+
+
+               // String args[] = { _id };
+
+
+//                Cursor c = getActivity().getContentResolver().query(mContactUri,
+//                        new String[] {ContactsContract.CommonDataKinds.Phone.NUMBER},
+//                        ContactsContract.Contacts.DISPLAY_NAME + " LIKE ? ",
+//                        args,
+//                        null);
 //                intent.putExtra("Name", )
 //                Log.v("test", data);
                 // Give the intent to the mainform activity
+                Log.v("NO ", phoneNumber);
                 Intent intent = new Intent(ContactFragment.this.getActivity(), MainActivity.class);
-                //intent.putExtra("Name", )
+                intent.putExtra("Name", name);
+                intent.putExtra("Phone Number", phoneNumber);
                 startActivity(intent);
-                   
 
-                 Log.v("Test", _id);
+                Log.v("Test", _id);
 
             }
 
         });
     }
 
-        @SuppressLint("InlinedApi")
+    @SuppressLint("InlinedApi")
     private static final String[] PROJECTION =
             {
                     ContactsContract.Contacts._ID,
@@ -154,7 +181,7 @@ public class ContactFragment extends Fragment implements
             (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
                     ContactsContract.Contacts.DISPLAY_NAME_PRIMARY + " LIKE ?" :
                     ContactsContract.Contacts.DISPLAY_NAME + " LIKE ?") +
-            " AND " + ContactsContract.Contacts.HAS_PHONE_NUMBER + " = ? ";
+                    " AND " + ContactsContract.Contacts.HAS_PHONE_NUMBER + " = ? ";
 
     // Defines a variable for the search string
     private String mSearchString;
@@ -177,7 +204,7 @@ public class ContactFragment extends Fragment implements
 //        mContactKey = cursor.getString(LOOKUP_KEY_INDEX);
 //        // Create the contact's content Uri
 //        mContactUri = ContactsContract.Contacts.getLookupUri(mContactId, mContactKey);
-//        Log.v("itemClick","@@@@@@@ In the Fragment");
+//
 //        Context context = getActivity();
 //        CharSequence text = "Hello toast!";
 //        int duration = Toast.LENGTH_SHORT;
@@ -210,23 +237,12 @@ public class ContactFragment extends Fragment implements
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         // Put the result Cursor in the adapter for the ListView
 
-
-
-
-
         mCursorAdapter.swapCursor(cursor);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         // Delete the reference to the existing Cursor
-
-
-
-
-
-
-
 
         mCursorAdapter.swapCursor(null);
 

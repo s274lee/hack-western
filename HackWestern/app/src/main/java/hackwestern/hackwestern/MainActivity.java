@@ -27,15 +27,24 @@ public class MainActivity extends ActionBarActivity {
     Button buttonSend; //Schedule message btn
     //TODO: define longitude and latitude elements from the UI
     Button contactButton;
-
+    String name;
+    String phone_number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
 
+        name = intent.getStringExtra(ContactFragment.Name);
+        phone_number = intent.getStringExtra(ContactFragment.phone_number);
+
         // Set the text view as the activity layout
         setContentView(R.layout.activity_main);
+
+       // repName = (TextView) findViewById(R.id.repName);
+      //  repName.setText(name);
+        repNumber = (TextView) findViewById(R.id.repNumber);
+        repNumber.setText(phone_number);
         scheduleMessageListener();
         mapButtonClick();
     }
@@ -95,8 +104,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void saveMessage() {
-        repName = (TextView) findViewById(R.id.repName);
-        repNumber = (TextView) findViewById(R.id.repNumber);
+
         editTextSms = (EditText) findViewById(R.id.editTextSms);
 
         try {
@@ -106,8 +114,8 @@ public class MainActivity extends ActionBarActivity {
             SQLiteDatabase db = exec.getWritableDatabase();
 
             // Create a new map of values, where column names are the keys
-            String recipientName = repName.getText().toString();
-            String recipientNumber = repNumber.getText().toString();
+            String recipientName = name;
+            String recipientNumber = phone_number;
             String message = editTextSms.getText().toString();
 
             Date currentDate = new Date();
@@ -115,8 +123,8 @@ public class MainActivity extends ActionBarActivity {
             String creationDateStamp = format.format(currentDate);
 
             ContentValues values = new ContentValues();
-            values.put(SQLContract.MessageTable.COLUMN_RECIPIENT, "Hamrit");
-            values.put(SQLContract.MessageTable.COLUMN_PHONE_NUMBER, "6475237244");
+            values.put(SQLContract.MessageTable.COLUMN_RECIPIENT, recipientName);
+            values.put(SQLContract.MessageTable.COLUMN_PHONE_NUMBER, recipientNumber);
             values.put(SQLContract.MessageTable.COLUMN_MESSAGE, message);
             values.put(SQLContract.MessageTable.COLUMN_LATITUDE, 45); //TODO: get actual longitude and latitude values
             values.put(SQLContract.MessageTable.COLUMN_LONGITUDE, 55);

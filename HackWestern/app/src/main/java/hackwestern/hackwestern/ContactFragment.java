@@ -36,6 +36,9 @@ public class ContactFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
         AdapterView.OnItemClickListener {
 
+    public final static String Name = "";
+    public final static String phone_number = "";
+
     /*
      * Defines an array that contains column names to move from
      * the Cursor to the ListView.
@@ -122,7 +125,7 @@ public class ContactFragment extends Fragment implements
                 String phoneNumber = new String();
                 String _id = cursor2.getString(cursor2.getColumnIndex("_id"));
                 String[] args = {_id};
-                Log.v("NO ", _id);
+                Log.v("NO ", name);
 
                     Cursor pCur = cr.query(
                             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -148,8 +151,8 @@ public class ContactFragment extends Fragment implements
                 // Give the intent to the mainform activity
                 Log.v("NO ", phoneNumber);
                 Intent intent = new Intent(ContactFragment.this.getActivity(), MainActivity.class);
-                intent.putExtra("Name", name);
-                intent.putExtra("Phone Number", phoneNumber);
+                intent.putExtra(Name, name);
+                intent.putExtra(phone_number, phoneNumber);
                 startActivity(intent);
 
                 Log.v("Test", _id);

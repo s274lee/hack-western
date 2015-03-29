@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<<<<<<< HEAD
-=======
 
->>>>>>> 64ec65928ab81fdd009438bf187495ea876d5a6b
     <string name="app_name">HackWestern</string>
     <string name="hello_world">Hello world!</string>
     <string name="text_loc_title">Compose a TextLoc Message</string>
@@ -11,13 +8,12 @@
     <string name="recipient_details_name">Name: </string>
     <string name="recipient_details_number">Phone Number: </string>
     <string name="action_settings">Settings</string>
-<<<<<<< HEAD
+
     <string name="phone_number">Enter a Phone Number</string>
     <string name="message_action">Enter a message</string>
     <string name="location_prompt">Send message when I am at</string>
     <string name="send_text">Send Message</string>
-=======
+
     <string name="title_activity_listview">Listview</string>
 
->>>>>>> 64ec65928ab81fdd009438bf187495ea876d5a6b
 </resources>

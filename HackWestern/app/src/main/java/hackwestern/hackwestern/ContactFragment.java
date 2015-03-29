@@ -2,6 +2,7 @@ package hackwestern.hackwestern;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import android.provider.ContactsContract;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class ContactFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
@@ -81,7 +83,7 @@ public class ContactFragment extends Fragment implements
         // Gets a CursorAdapter
         mCursorAdapter = new SimpleCursorAdapter(
                 getActivity(),
-                R.layout.contacts_list_item,
+                android.R.layout.simple_list_item_1,
                 null,
                 FROM_COLUMNS,
                 TO_IDS,
@@ -99,9 +101,11 @@ public class ContactFragment extends Fragment implements
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
+                Context context = getActivity();
 
                 // Give the intent to the mainform activity
-
+                Intent intent = new Intent(ContactFragment.this.getActivity(), MainActivity.class);
+                startActivity(intent);
             }
 
         });
@@ -144,18 +148,24 @@ public class ContactFragment extends Fragment implements
     public void onItemClick(
             AdapterView<?> parent, View item, int position, long rowID) {
         // Get the Cursor
-        Cursor cursor = ((SimpleCursorAdapter) parent.getAdapter()).getCursor();
-        // Move to the selected contact
-        cursor.moveToPosition(position);
-        // Get the _ID value
-        mContactId = cursor.getLong(CONTACT_ID_INDEX);
-        // Get the selected LOOKUP KEY
-        mContactKey = cursor.getString(LOOKUP_KEY_INDEX);
-        // Create the contact's content Uri
-        mContactUri = ContactsContract.Contacts.getLookupUri(mContactId, mContactKey);
-
-        Intent intent = new Intent(ContactFragment.this.getActivity(), MainActivity.class);
-        startActivity(intent);
+//        Cursor cursor = ((SimpleCursorAdapter) parent.getAdapter()).getCursor();
+//        // Move to the selected contact
+//        cursor.moveToPosition(position);
+//        // Get the _ID value
+//        mContactId = cursor.getLong(CONTACT_ID_INDEX);
+//        // Get the selected LOOKUP KEY
+//        mContactKey = cursor.getString(LOOKUP_KEY_INDEX);
+//        // Create the contact's content Uri
+//        mContactUri = ContactsContract.Contacts.getLookupUri(mContactId, mContactKey);
+//        Log.v("itemClick","@@@@@@@ In the Fragment");
+//        Context context = getActivity();
+//        CharSequence text = "Hello toast!";
+//        int duration = Toast.LENGTH_SHORT;
+//
+//        Toast toast = Toast.makeText(context, text, duration);
+//        toast.show();
+//        Intent intent = new Intent(ContactFragment.this.getActivity(), MainActivity.class);
+//        startActivity(intent);
         /*
          * You can use mContactUri as the content URI for retrieving
          * the details for a contact.

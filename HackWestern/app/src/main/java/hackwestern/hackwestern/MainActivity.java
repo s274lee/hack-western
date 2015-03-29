@@ -77,8 +77,8 @@ public class MainActivity extends ActionBarActivity {
 //            Toast.makeText(getApplicationContext(), ex.getMessage(),
 //                    Toast.LENGTH_LONG).show();
 //        }
-
-        contactButtonClick();
+//
+//        contactButtonClick();
 
     }
 

@@ -27,7 +27,6 @@ import java.util.List;
 public class Listview extends ActionBarActivity {
 
     private ListView listview;
-    private ArrayList<String> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +47,10 @@ public class Listview extends ActionBarActivity {
 
         listview = (ListView) findViewById(R.id.Listview);
 
-        list = getNames();
+        ArrayList<String> messages = getNames();
 
         listview.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, list));
+                android.R.layout.simple_list_item_1, android.R.id.text1, messages));
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -60,7 +59,7 @@ public class Listview extends ActionBarActivity {
             int position, long id) {
 
                 // Give the intent to the textloc form activity
-                Intent intent = new Intent(Listview.this, ContactActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ContactActivity.class);
                 startActivity(intent);
             }
         });
@@ -89,7 +88,8 @@ public class Listview extends ActionBarActivity {
         SQLiteDatabase db = exec.getReadableDatabase();
 
         String[] results = {
-                SQLContract.MessageTable.COLUMN_SENT_FLAG
+                SQLContract.MessageTable.COLUMN_SENT_FLAG,
+                SQLContract.MessageTable.COLUMN_RECIPIENT
         };
 
         Cursor cur = db.query(
@@ -101,58 +101,22 @@ public class Listview extends ActionBarActivity {
                 null,
                 null
         );
+        ArrayList<String> messages = new ArrayList<String>();
+        while(cur.moveToNext()) {
 
-        cur.moveToFirst();
+            String recipient = cur.getString(cur.getColumnIndex(SQLContract.MessageTable.COLUMN_RECIPIENT));
+            int flag = cur.getInt(cur.getColumnIndex(SQLContract.MessageTable.COLUMN_SENT_FLAG));
+            if (flag == 0) {
+                messages.add( "Pending: " + recipient);
 
-        // Create the list to return
-        ArrayList<String> namelist = new ArrayList<String>();
-        String name = "";
+            } else {
+                messages.add("Sent: " + recipient);
+            }
 
-        // Checks if the database table has any rows
-//        if (cur.getCount() > 0) {
-//            namelist.add("cur has more than 0 rows");
-//        } else {
-//            namelist.add("cur has 0 rows");
-//        }
-
-        // TODO: change this to handle multiple entries from the database
-        // Get the sent flag status
-        Integer flag = cur.getInt(cur.getColumnIndex(SQLContract.MessageTable.COLUMN_SENT_FLAG));
-        if (flag == 0) {
-            name += "Pending: ";
-        } else if (flag == 1) {
-            name += "Sent: ";
-        } else {
-            name += "Weird: ";
         }
-
-        // Getting the recipient's name
-        String[] secondresults = {
-                SQLContract.MessageTable.COLUMN_RECIPIENT
-        };
-
-        Cursor secondcur = db.query(
-                SQLContract.MessageTable.TABLE_NAME,
-                secondresults,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-
-        secondcur.moveToFirst();
-
-        name += secondcur.getString(secondcur.getColumnIndex(SQLContract.MessageTable.COLUMN_RECIPIENT));
-
-        namelist.add(name);
-        return namelist;
-
-//        namelist.add("lollilollipop");
-//        return namelist;
+      return messages;
 
     }
-
 
     public void sendMessages() {
 
@@ -178,8 +142,6 @@ public class Listview extends ActionBarActivity {
                         }
                     }
 
-//                   Toast.makeText(getApplicationContext(),"Location detected. Longitude:"+longitude+" Latitude:"+latitude,
-//                            Toast.LENGTH_LONG).show();
                 }
 
                 @Override

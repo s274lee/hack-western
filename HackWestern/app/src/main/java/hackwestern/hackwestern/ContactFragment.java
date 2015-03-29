@@ -74,7 +74,7 @@ public class ContactFragment extends Fragment implements
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Log.v("test","@@@@@@@ In the Fragment");
+       // Log.v("test","@@@@@@@ In the Fragment");
         // Gets the ListView from the View list of the parent activity
         mContactsList =
                 (ListView) getActivity().findViewById(R.id.contact_listView);
@@ -98,7 +98,7 @@ public class ContactFragment extends Fragment implements
         // Set the item click listener to be the current fragment.
         mContactsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
+
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
                 Context context = getActivity();

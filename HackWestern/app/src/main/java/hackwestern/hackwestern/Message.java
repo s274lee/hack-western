@@ -10,5 +10,6 @@ public class Message {
     public String phoneNumber;
     public double longitude;
     public double latitude;
+    public String status;
 }
 

@@ -12,18 +12,11 @@ import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,9 +43,8 @@ public class Listview extends ActionBarActivity {
             }
         });
 
-       // buildDatabase();
+        buildDatabase();
         sendMessages();
-       //ArrayList<String> list = getNames();
 
         listview = (ListView) findViewById(R.id.Listview);
 
@@ -70,14 +62,11 @@ public class Listview extends ActionBarActivity {
                 // Give the intent to the textloc form activity
                 Intent intent = new Intent(Listview.this, ContactActivity.class);
                 startActivity(intent);
-
             }
-
         });
 
     }
 
-<<<<<<< HEAD
     public void buildDatabase() {
         try {
             DbExecutor exec = new DbExecutor(getApplicationContext());
@@ -93,44 +82,6 @@ public class Listview extends ActionBarActivity {
     }
 
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        // Probably resumed after adding a Textloc
-//        // Must update the list of names and the adapter
-//        list = new ArrayList<String>();
-//        list.add("Create Textloc");
-//        ArrayList<String> secondlist = getNames();
-//        list.addAll(secondlist);
-//        ((BaseAdapter) listview.getAdapter()).notifyDataSetChanged();
-//    }
-
-=======
->>>>>>> e80a050aad22a5b2ba2cf129307b0308dc8adaae
-    private class StableArrayAdapter extends ArrayAdapter<String> {
-
-        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-
-        public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
-            super(context, textViewResourceId, objects);
-            for (int i = 0; i < objects.size(); ++i) {
-                mIdMap.put(objects.get(i), i);
-            }
-        }
-
-        @Override
-        public long getItemId(int position) {
-            String item = getItem(position);
-            return mIdMap.get(item);
-        }
-        @Override
-        public boolean hasStableIds() {
-            return true;
-        }
-
-    }
 
     // Produces the ArrayList<String> made of existing Textloc names
     public ArrayList<String> getNames() {

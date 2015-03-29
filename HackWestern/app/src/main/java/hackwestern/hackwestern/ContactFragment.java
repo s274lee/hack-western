@@ -68,12 +68,6 @@ public class ContactFragment extends Fragment implements
     // An adapter that binds the result Cursor to the ListView
     private SimpleCursorAdapter mCursorAdapter;
 
-
-//    private ArrayList<String> list;
-
-
-
-
     // Empty public constructor, required by the system
     public ContactFragment() {}
 
@@ -103,27 +97,6 @@ public class ContactFragment extends Fragment implements
                 TO_IDS,
                 0);
 
-
-
-
-        /*
-        final ArrayList<String> list = new ArrayList<String>();
-        String[] values = FROM_COLUMNS;
-
-        for (int i = 0; i < values.length; ++i) {
-            list.add(values[i]);
-        }
-
-
-        Context context = getActivity();
-        StableArrayAdapter mCursorAdapter = new StableArrayAdapter(context, android.R.layout.simple_list_item_1, list);
-        mContactsList.setAdapter(mCursorAdapter);
-*/
-
-
-
-
-
         // Initializes the loader
         getLoaderManager().initLoader(0, null, this);
 
@@ -141,26 +114,16 @@ public class ContactFragment extends Fragment implements
 //                Context context = getActivity();
 //                TextView c = (TextView) view.findViewById(R.id.text);
 //                String playerChanged = c.getText().toString();
+                Cursor cursor = (Cursor)parent.getItemAtPosition(position);
+                String name = cursor.getString(0);
+                String _id = cursor.getString(cursor.getColumnIndex("display_name"));
+//                intent.putExtra("Name", )
 //                Log.v("test", data);
                 // Give the intent to the mainform activity
-                //Intent intent = new Intent(ContactFragment.this.getActivity(), MainActivity.class);
+                Intent intent = new Intent(ContactFragment.this.getActivity(), MainActivity.class);
                 //intent.putExtra("Name", )
-                //startActivity(intent);
+                startActivity(intent);
                    
-
-                   Cursor cursor = (Cursor)parent.getItemAtPosition(position);
-                   String name = cursor.getString(0);
-                   String _id = cursor.getString(cursor.getColumnIndex("display_name"));
-                   intent.putExtra("Name", )
-//                final String item = (String) parent.getItemAtPosition(position);
-//                view.animate().setDuration(2000).alpha(0)
-//                        .withEndAction(new Runnable() {
-//                            @Override
-//                        public void run() {
-//                                list.remove(item);
-//                                view.setAlpha(1);
-//                            }
-//                        });
 
                  Log.v("Test", _id);
 
@@ -168,34 +131,6 @@ public class ContactFragment extends Fragment implements
 
         });
     }
-
-    /*
-    private class StableArrayAdapter extends ArrayAdapter<String> {
-
-        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-
-        public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
-            super(context, textViewResourceId, objects);
-            for (int i = 0; i < objects.size(); ++i) {
-                mIdMap.put(objects.get(i), i);
-            }
-        }
-
-        @Override
-        public long getItemId(int position) {
-            String item = getItem(position);
-            return mIdMap.get(item);
-        }
-
-        @Override
-        public boolean hasStableIds() {
-            return true;
-        }
-
-    }
-    */
-
 
         @SuppressLint("InlinedApi")
     private static final String[] PROJECTION =
@@ -206,7 +141,6 @@ public class ContactFragment extends Fragment implements
                             >= Build.VERSION_CODES.HONEYCOMB ?
                             ContactsContract.Contacts.DISPLAY_NAME_PRIMARY :
                             ContactsContract.Contacts.DISPLAY_NAME
-
             };
 
     // The column index for the _ID column
@@ -220,7 +154,7 @@ public class ContactFragment extends Fragment implements
             (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
                     ContactsContract.Contacts.DISPLAY_NAME_PRIMARY + " LIKE ?" :
                     ContactsContract.Contacts.DISPLAY_NAME + " LIKE ?") +
-            " AND " + ContactsContract.Contacts.HAS_PHONE_NUMBER + " = ?";
+            " AND " + ContactsContract.Contacts.HAS_PHONE_NUMBER + " = ? ";
 
     // Defines a variable for the search string
     private String mSearchString;
@@ -248,10 +182,6 @@ public class ContactFragment extends Fragment implements
 //        CharSequence text = "Hello toast!";
 //        int duration = Toast.LENGTH_SHORT;
 //
-//        Toast toast = Toast.makeText(context, text, duration);
-//        toast.show();
-//        Intent intent = new Intent(ContactFragment.this.getActivity(), MainActivity.class);
-//        startActivity(intent);
         /*
          * You can use mContactUri as the content URI for retrieving
          * the details for a contact.

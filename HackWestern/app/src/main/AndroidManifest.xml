@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hackwestern.hackwestern" >
+    <permission android:name="hackwestern.hackwestern.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
 
+    <uses-permission android:name="hackwestern.hackwestern.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -31,7 +34,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyArxMl3v3I6GCJ2CRp7qStBlXn2nQT4Vys"/>
+            android:value="AIzaSyDa83QIp8STpVLpCFQeisjAKqEnYw2lepA"/>
         <activity
             android:name=".ContactActivity"
             android:label="@string/title_activity_contact" >

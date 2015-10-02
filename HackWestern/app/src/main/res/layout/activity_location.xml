@@ -13,8 +13,8 @@
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        map:cameraTargetLat="43.0083"
-        map:cameraTargetLng="-81.2719"
+        map:cameraTargetLat="43.6385"
+        map:cameraTargetLng="-79.3821"
         map:cameraZoom="13"/>
 
 </LinearLayout>

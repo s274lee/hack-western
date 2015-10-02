@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -132,7 +133,7 @@ public class Listview extends ActionBarActivity {
 
                     for(int i=0;i<messages.size();i++) {
                         Message m = messages.get(i);
-                        if(m.latitude == latitude && m.longitude == longitude) {
+                        if(Math.abs(m.latitude - latitude) + Math.abs(m.longitude - longitude) <= 3) {
                             setMessageToSent(m.id);
                             sendSms(m.phoneNumber, m.messageText);
                             Toast.makeText(getApplicationContext(),"Message sent to"+m.recipient,
@@ -150,13 +151,13 @@ public class Listview extends ActionBarActivity {
 
                 @Override
                 public void onProviderEnabled(String provider) {
-                    Toast.makeText(getApplicationContext(),"enabled",
+                    Toast.makeText(getApplicationContext(),"ProviderEnabled",
                             Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onProviderDisabled(String provider) {
-                    Toast.makeText(getApplicationContext(),"disabled",
+                    Toast.makeText(getApplicationContext(),"ProviderDisabled",
                             Toast.LENGTH_LONG).show();
                 }
             };

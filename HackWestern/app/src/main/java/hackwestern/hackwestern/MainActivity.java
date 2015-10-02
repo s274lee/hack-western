@@ -85,15 +85,15 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    public void contactButtonClick() {
-        contactButton = (Button) findViewById(R.id.contactButton);
-        contactButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ContactActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
+//    public void contactButtonClick() {
+//        contactButton = (Button) findViewById(R.id.contactButton);
+//        contactButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), ContactActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//    }
 
     public void mapButtonClick() {
         contactButton = (Button) findViewById(R.id.buttonMap);

@@ -203,7 +203,7 @@ public class Listview extends ActionBarActivity
 
                     for(int i=0;i<messages.size();i++) {
                         Message m = messages.get(i);
-                        if(m.latitude == latitude && m.longitude == longitude) {
+                        if(Math.abs(m.latitude - latitude) + Math.abs(m.longitude - longitude) <= 0.5) {
                             setMessageToSent(m.id);
                             sendSms(m.phoneNumber, m.messageText);
                             Toast.makeText(getApplicationContext(),"Message sent to"+m.recipient,

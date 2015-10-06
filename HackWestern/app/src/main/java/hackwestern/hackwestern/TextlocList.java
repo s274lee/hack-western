@@ -3,7 +3,6 @@ package hackwestern.hackwestern;
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -27,8 +26,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
-import java.util.List;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -39,13 +36,11 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.GeofencingApi;
-import com.google.android.gms.maps.model.LatLng;
 
 import static android.R.id.text1;
 import static android.R.layout.simple_list_item_1;
 
-public class Listview extends ActionBarActivity
+public class TextlocList extends ActionBarActivity
         implements ConnectionCallbacks, OnConnectionFailedListener, ResultCallback<Status> {
 
     protected ListView listview;
@@ -69,15 +64,13 @@ public class Listview extends ActionBarActivity
             @Override
             public void onClick(View v) {
                 // Give the intent to the textloc form activity
-                Intent intent = new Intent(Listview.this, ContactActivity.class);
+                Intent intent = new Intent(TextlocList.this, ContactActivity.class);
                 startActivity(intent);
             }
         });
 
         buildDatabase();
         sendMessages();
-
-        //final Listview that = this;
 
         listview = (ListView) findViewById(R.id.Listview);
 

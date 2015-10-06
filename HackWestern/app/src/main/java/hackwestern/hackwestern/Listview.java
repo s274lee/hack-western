@@ -48,8 +48,8 @@ import static android.R.layout.simple_list_item_1;
 public class Listview extends ActionBarActivity
         implements ConnectionCallbacks, OnConnectionFailedListener, ResultCallback<Status> {
 
-    private ListView listview;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    protected ListView listview;
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
     private ArrayList<Geofence> mGeofenceList = new ArrayList<Geofence>();
     private GoogleApiClient mGoogleApiClient;
     protected static final String TAG = "geofences";
@@ -77,6 +77,8 @@ public class Listview extends ActionBarActivity
         buildDatabase();
         sendMessages();
 
+        //final Listview that = this;
+
         listview = (ListView) findViewById(R.id.Listview);
 
         ArrayList<String> messages = getNames();
@@ -96,18 +98,10 @@ public class Listview extends ActionBarActivity
             }
         });
 
-        final SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                ArrayList<String> messages = getNames();
-                listview.setAdapter(new ArrayAdapter<String>(this,
-                        simple_list_item_1, text1, messages));
-                Log.d("swiperefresh", "layouthere: " + mSwipeRefreshLayout);
-                mSwipeRefreshLayout.setRefreshing(false);
-                ;
-            }
-        });
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
+        ListviewSwipe mySwipe = new ListviewSwipe(this);
+        mSwipeRefreshLayout.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) mySwipe);
+
         Log.d("swiperefresh", "layout: " + mSwipeRefreshLayout);
 
         mAddGeofencesButton = (Button) findViewById(R.id.add_geofences_button);

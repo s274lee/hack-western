@@ -102,7 +102,6 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MapActivity.class);
                 startActivityForResult(intent,1);
-
             }
         });
     }

@@ -455,11 +455,16 @@ public class Listview extends ActionBarActivity
     }
 
     private void setButtonsEnabledState() {
-        if (mGeofencesAdded) {
-            mAddGeofencesButton.setEnabled(false);
-            mRemoveGeofencesButton.setEnabled(true);
+        if (!mGeofenceList.isEmpty()) {
+            if (mGeofencesAdded) {
+                mAddGeofencesButton.setEnabled(false);
+                mRemoveGeofencesButton.setEnabled(true);
+            } else {
+                mAddGeofencesButton.setEnabled(true);
+                mRemoveGeofencesButton.setEnabled(false);
+            }
         } else {
-            mAddGeofencesButton.setEnabled(true);
+            mAddGeofencesButton.setEnabled(false);
             mRemoveGeofencesButton.setEnabled(false);
         }
     }

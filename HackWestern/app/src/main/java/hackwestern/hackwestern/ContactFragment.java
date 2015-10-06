@@ -153,13 +153,13 @@ public class ContactFragment extends Fragment implements
                 Intent intent = new Intent(ContactFragment.this.getActivity(), MainActivity.class);
                 intent.putExtra(Name, name);
                 intent.putExtra(phone_number, phoneNumber);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
 
                 Log.v("Test", _id);
-
             }
 
         });
+
     }
 
     @SuppressLint("InlinedApi")

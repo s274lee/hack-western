@@ -221,13 +221,13 @@ public class Listview extends ActionBarActivity
 
                 @Override
                 public void onProviderEnabled(String provider) {
-                    Toast.makeText(getApplicationContext(),"enabled",
+                    Toast.makeText(getApplicationContext(),"ProviderEnabled",
                             Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onProviderDisabled(String provider) {
-                    Toast.makeText(getApplicationContext(),"disabled",
+                    Toast.makeText(getApplicationContext(),"ProviderDisabled",
                             Toast.LENGTH_LONG).show();
                 }
             };

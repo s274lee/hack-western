@@ -92,6 +92,8 @@ public class Listview extends ActionBarActivity
             }
         });
 
+        mAddGeofencesButton = (Button) findViewById(R.id.add_geofences_button);
+        mRemoveGeofencesButton = (Button) findViewById(R.id.remove_geofences_button);
         mGeofenceList = new ArrayList<Geofence>();
         mGeofencePendingIntent = null;
         mSharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE);

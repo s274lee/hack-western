@@ -14,9 +14,9 @@ import static android.R.layout.simple_list_item_1;
  */
 public class ListviewSwipe implements SwipeRefreshLayout.OnRefreshListener {
 
-    TextlocList mylistview;
+    textLocListView mylistview;
 
-    public ListviewSwipe(TextlocList mylistview) {
+    public ListviewSwipe(textLocListView mylistview) {
         this.mylistview = mylistview;
     }
 

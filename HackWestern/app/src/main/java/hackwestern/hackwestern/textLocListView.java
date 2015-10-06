@@ -40,7 +40,7 @@ import com.google.android.gms.location.LocationServices;
 import static android.R.id.text1;
 import static android.R.layout.simple_list_item_1;
 
-public class TextlocList extends ActionBarActivity
+public class textLocListView extends ActionBarActivity
         implements ConnectionCallbacks, OnConnectionFailedListener, ResultCallback<Status> {
 
     protected ListView listview;
@@ -64,7 +64,7 @@ public class TextlocList extends ActionBarActivity
             @Override
             public void onClick(View v) {
                 // Give the intent to the textloc form activity
-                Intent intent = new Intent(TextlocList.this, ContactActivity.class);
+                Intent intent = new Intent(textLocListView.this, ContactActivity.class);
                 startActivity(intent);
             }
         });

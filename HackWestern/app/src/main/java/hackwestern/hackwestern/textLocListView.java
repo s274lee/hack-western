@@ -57,8 +57,19 @@ public class textLocListView extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_listview);
+
+        // Geofence buttons
+        mAddGeofencesButton = (Button) findViewById(R.id.add_geofences_button);
+        mRemoveGeofencesButton = (Button) findViewById(R.id.remove_geofences_button);
+        mGeofencePendingIntent = null;
+        mSharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
+        mGeofencesAdded = mSharedPreferences.getBoolean(Constants.GEOFENCES_ADDED_KEY, false);
+        setButtonsEnabledState();
+        populateGeofenceList();
+        buildGoogleApiClient();
+
+        // Setup button to create TextLocs
         View buttonView = findViewById(R.id.createtextloc);
         buttonView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,43 +83,26 @@ public class textLocListView extends ActionBarActivity
         buildDatabase();
         sendMessages();
 
+        // Layout which allows pull to refresh
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
+        ListviewSwipe mySwipe = new ListviewSwipe(this);
+        mSwipeRefreshLayout.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) mySwipe);
+
+        // Listview which lists the sent messages
         listview = (ListView) findViewById(R.id.Listview);
-
         ArrayList<String> messages = getNames();
-
         listview.setAdapter(new ArrayAdapter<String>(this,
                 simple_list_item_1, text1, messages));
-
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
-
                 // Give the intent to the textloc form activity
                 Intent intent = new Intent(getApplicationContext(), ContactActivity.class);
                 startActivity(intent);
             }
         });
-
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
-        ListviewSwipe mySwipe = new ListviewSwipe(this);
-        mSwipeRefreshLayout.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) mySwipe);
-
-        Log.d("swiperefresh", "layout: " + mSwipeRefreshLayout);
-
-        mAddGeofencesButton = (Button) findViewById(R.id.add_geofences_button);
-        mRemoveGeofencesButton = (Button) findViewById(R.id.remove_geofences_button);
-        mGeofencePendingIntent = null;
-        mSharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
-
-        mGeofencesAdded = mSharedPreferences.getBoolean(Constants.GEOFENCES_ADDED_KEY, false);
-        setButtonsEnabledState();
-        populateGeofenceList();
-
-        buildGoogleApiClient();
     }
-
 
     @Override
     protected void onStart() {

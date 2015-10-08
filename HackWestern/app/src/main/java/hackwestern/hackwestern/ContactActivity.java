@@ -1,7 +1,6 @@
 package hackwestern.hackwestern;
 
 import android.content.Intent;
-import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -44,7 +43,7 @@ public class ContactActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(ContactActivity.this, MainActivity.class);
+            Intent intent = new Intent(ContactActivity.this, MessageActivity.class);
             startActivity(intent);
             return true;
         }

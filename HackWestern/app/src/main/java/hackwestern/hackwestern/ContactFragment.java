@@ -1,15 +1,12 @@
 package hackwestern.hackwestern;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Contacts;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -21,23 +18,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.provider.ContactsContract;
 
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class ContactFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
         AdapterView.OnItemClickListener {
 
-    public final static String Name = "";
-    public final static String phone_number = "";
+    public final static String Name = "Name";
+    public final static String phone_number = "Phone Number";
 
     /*
      * Defines an array that contains column names to move from
@@ -150,9 +139,11 @@ public class ContactFragment extends Fragment implements
 //                Log.v("test", data);
                 // Give the intent to the mainform activity
                 Log.v("NO ", phoneNumber);
-                Intent intent = new Intent(ContactFragment.this.getActivity(), MainActivity.class);
+                Intent intent = new Intent(ContactFragment.this.getActivity(), MessageActivity.class);
                 intent.putExtra(Name, name);
                 intent.putExtra(phone_number, phoneNumber);
+                Log.v("NO ", name);
+                Log.v("NO ", phoneNumber);
                 startActivityForResult(intent, 1);
 
                 Log.v("Test", _id);

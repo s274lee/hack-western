@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,8 +18,9 @@ import android.database.SQLException;
 import java.text.SimpleDateFormat;
 import 	java.util.Date;
 import java.text.DateFormat;
+import java.util.jar.Attributes;
 
-public class MainActivity extends ActionBarActivity {
+public class MessageActivity extends ActionBarActivity {
 
 
     TextView repName; //change to just be the recipient name
@@ -40,11 +42,15 @@ public class MainActivity extends ActionBarActivity {
         name = intent.getStringExtra(ContactFragment.Name);
         phone_number = intent.getStringExtra(ContactFragment.phone_number);
 
+        Log.d("name", name);
+        Log.d("phone number", phone_number);
+
+
         // Set the text view as the activity layout
         setContentView(R.layout.activity_main);
 
-       // repName = (TextView) findViewById(R.id.repName);
-      //  repName.setText(name);
+        repName = (TextView) findViewById(R.id.repName);
+        repName.setText(name);
         repNumber = (TextView) findViewById(R.id.repNumber);
         repNumber.setText(phone_number);
         scheduleMessageListener();

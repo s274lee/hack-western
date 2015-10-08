@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class GeofenceTransitionsIntentService extends IntentService {
 
-    protected static final String TAG = "geofence-transitions-service";
+    protected static final String TAG = "geofence-transitions";
 
     /**
      * This constructor is required, and calls the super IntentService(String)

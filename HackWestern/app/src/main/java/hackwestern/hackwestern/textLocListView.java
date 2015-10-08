@@ -3,7 +3,6 @@ package hackwestern.hackwestern;
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -12,7 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.provider.SyncStateContract;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -27,8 +26,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
-import java.util.List;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -39,14 +36,16 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.GeofencingApi;
-import com.google.android.gms.maps.model.LatLng;
 
-public class Listview extends ActionBarActivity
+import static android.R.id.text1;
+import static android.R.layout.simple_list_item_1;
+
+public class textLocListView extends ActionBarActivity
         implements ConnectionCallbacks, OnConnectionFailedListener, ResultCallback<Status> {
 
-    private ListView listview;
-    private ArrayList<Geofence> mGeofenceList;
+    protected ListView listview;
+    protected SwipeRefreshLayout mSwipeRefreshLayout;
+    private ArrayList<Geofence> mGeofenceList = new ArrayList<Geofence>();
     private GoogleApiClient mGoogleApiClient;
     protected static final String TAG = "geofences";
     private boolean mGeofencesAdded;
@@ -65,7 +64,7 @@ public class Listview extends ActionBarActivity
             @Override
             public void onClick(View v) {
                 // Give the intent to the textloc form activity
-                Intent intent = new Intent(Listview.this, ContactActivity.class);
+                Intent intent = new Intent(textLocListView.this, ContactActivity.class);
                 startActivity(intent);
             }
         });
@@ -78,7 +77,7 @@ public class Listview extends ActionBarActivity
         ArrayList<String> messages = getNames();
 
         listview.setAdapter(new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, messages));
+                simple_list_item_1, text1, messages));
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -92,9 +91,14 @@ public class Listview extends ActionBarActivity
             }
         });
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
+        ListviewSwipe mySwipe = new ListviewSwipe(this);
+        mSwipeRefreshLayout.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) mySwipe);
+
+        Log.d("swiperefresh", "layout: " + mSwipeRefreshLayout);
+
         mAddGeofencesButton = (Button) findViewById(R.id.add_geofences_button);
         mRemoveGeofencesButton = (Button) findViewById(R.id.remove_geofences_button);
-        mGeofenceList = new ArrayList<Geofence>();
         mGeofencePendingIntent = null;
         mSharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
 
@@ -118,6 +122,11 @@ public class Listview extends ActionBarActivity
         mGoogleApiClient.disconnect();
     }
 
+    @Override
+    protected void onResume () {
+        super.onResume();
+        setButtonsEnabledState();
+    }
 
     public void onConnected(Bundle connectionHint) {
         Log.d(TAG, "Connected to GoogleApiClient");
@@ -135,7 +144,6 @@ public class Listview extends ActionBarActivity
         // The connection to Google Play services was lost for some reason.
         Log.d(TAG, "Connection suspended");
     }
-
 
     public void buildDatabase() {
         try {
@@ -210,7 +218,7 @@ public class Listview extends ActionBarActivity
                                     Toast.LENGTH_LONG).show();
                         }
                     }
-
+                    Log.d("Geofences: ", "arraylist" + mGeofenceList);
                 }
 
                 @Override
@@ -426,17 +434,19 @@ public class Listview extends ActionBarActivity
     }
 
     public void populateGeofenceList() {
-        for (Map.Entry<String, LatLng> entry : Constants.TORONTO_LANDMARKS.entrySet()) {
+        ArrayList<Message> messages = getMessages();
 
+        for(int i=0;i<messages.size();i++) {
+            Message m = messages.get(i);
             mGeofenceList.add(new Geofence.Builder()
                     // Set the request ID of the geofence. This is a string to identify this
                     // geofence.
-                    .setRequestId(entry.getKey())
+                    .setRequestId("Textloc")
 
                             // Set the circular region of this geofence.
                     .setCircularRegion(
-                            entry.getValue().latitude,
-                            entry.getValue().longitude,
+                            m.latitude,
+                            m.longitude,
                             Constants.GEOFENCE_RADIUS_IN_METERS
                     )
 
@@ -445,9 +455,8 @@ public class Listview extends ActionBarActivity
                     .setExpirationDuration(Constants.GEOFENCE_EXPIRATION_IN_MILLISECONDS)
 
                             // Set the transition types of interest. Alerts are only generated for these
-                            // transition. We track entry and exit transitions in this sample.
-                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-                            Geofence.GEOFENCE_TRANSITION_EXIT)
+                            // transition. We track entry transitions in this sample.
+                    .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
 
                             // Create the geofence.
                     .build());
